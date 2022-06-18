@@ -4,17 +4,13 @@ import PropTypes from 'prop-types';
 import { Panel, PanelHeader, Header, Button, Group, Cell, Div, Avatar, PanelHeaderBack, List } from '@vkontakte/vkui';
 import { LOCATIONS } from '../static';
 
-const Locations = ({ id }) => (
+const Locations = ({ id, go }) => (
     <Panel id={id}>
-        <PanelHeader
-            separator={false}
-            before={
-                <PanelHeaderBack
-                    onClick={() => this.setState({ activePanel: "home" })}
-                />
-            }
-        >
-            Локации
+        <PanelHeader>
+            <Cell before={<PanelHeaderBack onClick={go} data-to='home' />}>
+                Локации
+            </Cell>
+
         </PanelHeader>
         <Group>
             <List>
