@@ -8,13 +8,19 @@ const Home = ({ id, go }) => (
 		<PanelHeader>Spy</PanelHeader>
 		<Group>
 			<Div>
+				<Button stretched size="l" mode="secondary" onClick={go} data-to="game">
+					Начать игру
+				</Button>
+			</Div>
+			<Div>
 				<Button stretched size="l" mode="secondary" onClick={go} data-to="locations">
 					Посмотреть локации
 				</Button>
 			</Div>
 			<Div>
-				<Button stretched size="l" mode="secondary" onClick={go} data-to="game">
-					Начать игру
+				<Button stretched size="l" mode="secondary" onClick={go}
+					data-to="createLocations">
+					Добавить локацию
 				</Button>
 			</Div>
 		</Group>

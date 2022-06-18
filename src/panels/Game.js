@@ -18,16 +18,16 @@ import {
 
 import { LOCATIONS } from '../static';
 
-const Game = ({ id, go, openLocationModal, startTimer, timer, stopTimer }) => {
+const Game = ({ id, go, openLocationModal, startTimer, timer, stopTimer, setActiveUser, setSpyIds }) => {
 
   const [countOfPlayers, setCountOfPlayers] = useState(3);
   const changeCountOfPlayers = (evt) => {
-    setCountOfPlayers(evt.currentTarget.value);
+    setCountOfPlayers(+evt.target.value);
   }
 
   const [countOfSpyes, setCountOfSpyes] = useState(1);
   const changeCountOfSpyes = (evt) => {
-    setCountOfSpyes(evt.currentTarget.value);
+    setCountOfSpyes(+evt.target.value);
   }
 
   const [gameStatus, setGameStatus] = useState({
@@ -42,17 +42,30 @@ const Game = ({ id, go, openLocationModal, startTimer, timer, stopTimer }) => {
   function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min)) + min;
+    let num = Math.floor(Math.random() * (max - min)) + min;
+    if (spyUsers.includes(num)) {
+        num = getRandomInt(min, max);
+    }
+    return num;
   }
-
   const dealStart = () => {
+    if (countOfSpyes < 0 || countOfPlayers < 0 || countOfSpyes > 2 || countOfPlayers > 12) {
+        return;
+    }   
     setGameStatus({
         ...gameStatus,
         dealStart: true,
     })
+    const spyIds = [];
     for (let i = 1; i <= countOfSpyes; i += 1) {
-        setSpyUsers(spyUsers.concat([getRandomInt(0, countOfPlayers)]));
+        let num = getRandomInt(1, countOfPlayers);
+        while (spyUsers.includes(num)) {
+            num = getRandomInt(1, countOfPlayers);
+        }
+        spyIds.push(num);
     }
+    setSpyUsers(spyIds);
+    setSpyIds(spyIds);
     setLocation(
         LOCATIONS[Object.keys(LOCATIONS)[getRandomInt(1, Object.keys(LOCATIONS).length)]]
     );
@@ -65,9 +78,10 @@ const Game = ({ id, go, openLocationModal, startTimer, timer, stopTimer }) => {
         dealStart: false,
     })
   };
-
+  
   const endGame = () => {
     setCurrentPlayer(1);
+    setActiveUser(1);
     setSpyUsers([]);
     setLocation('');
     stopTimer();
@@ -79,6 +93,7 @@ const Game = ({ id, go, openLocationModal, startTimer, timer, stopTimer }) => {
 
   const nextPlayer = () => {
     setCurrentPlayer(currentPlayer + 1);
+    setActiveUser(currentPlayer + 1);
   };
 
   const getSpyesStatus = () => {
