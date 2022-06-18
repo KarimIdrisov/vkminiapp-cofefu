@@ -44,7 +44,7 @@ const App = () => {
 	}
 
 	const startTimer = (count) => {
-		const deadline = addMinutes(new Date(), 1);
+		const deadline = addMinutes(new Date(), count);
 
 		countdownTimer(deadline);
 
