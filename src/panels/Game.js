@@ -18,7 +18,7 @@ import {
 
 import { LOCATIONS } from '../static';
 
-const Game = ({ id, go, openLocationModal }) => {
+const Game = ({ id, go, openLocationModal, startTimer, timer, stopTimer }) => {
 
   const [countOfPlayers, setCountOfPlayers] = useState(3);
   const changeCountOfPlayers = (evt) => {
@@ -54,16 +54,28 @@ const Game = ({ id, go, openLocationModal }) => {
         setSpyUsers(spyUsers.concat([getRandomInt(0, countOfPlayers)]));
     }
     setLocation(
-        LOCATIONS[Object.keys(LOCATIONS)[getRandomInt(0, Object.keys(LOCATIONS).length)]]
+        LOCATIONS[Object.keys(LOCATIONS)[getRandomInt(1, Object.keys(LOCATIONS).length)]]
     );
   }; 
 
   const startGame = () => {
+    startTimer(countOfPlayers);
     setGameStatus({
         gameStart: true,
         dealStart: false,
     })
   };
+
+  const endGame = () => {
+    setCurrentPlayer(1);
+    setSpyUsers([]);
+    setLocation('');
+    stopTimer();
+    setGameStatus({
+        gameStart: false,
+        dealStart: false
+    })
+  }
 
   const nextPlayer = () => {
     setCurrentPlayer(currentPlayer + 1);
@@ -155,8 +167,12 @@ const Game = ({ id, go, openLocationModal }) => {
         </Div>
       )}
       {gameStatus.gameStart && (
-        <Div style={{ display: 'flex', justifyContent: 'center'}}>
+        <Div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', }}>
           <Paragraph>Игра началась!</Paragraph>
+          <Paragraph style={{fontSize: '20px', margin: '10px'}}>{timer}</Paragraph>
+          <Button stretched mode="secondary" size="m" onClick={endGame}>
+                Закончить игру
+          </Button>
         </Div>
       )}
     </Panel>

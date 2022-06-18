@@ -6,10 +6,8 @@ import { LOCATIONS } from '../static';
 
 const Locations = ({ id, go }) => (
     <Panel id={id}>
-        <PanelHeader className='start-header'>
-            <Cell before={<PanelHeaderBack onClick={go} data-to='home' />}>
-                Локации
-            </Cell>
+        <PanelHeader  left={<PanelHeaderBack onClick={go} data-to="home" />}>
+             Локации
         </PanelHeader>
         <Group>
             <List>
