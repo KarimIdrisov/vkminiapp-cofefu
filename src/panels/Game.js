@@ -4,12 +4,10 @@ import PropTypes from 'prop-types';
 import { Panel, PanelHeader, Header, Button, Group, Cell, Div, Avatar, PanelHeaderBack, List } from '@vkontakte/vkui';
 import { LOCATIONS } from '../static';
 
-const Locations = ({ id, go }) => (
+const Game = ({ id, go }) => (
     <Panel id={id}>
-        <PanelHeader className='start-header'>
-            <Cell before={<PanelHeaderBack onClick={go} data-to='home' />}>
-                Локации
-            </Cell>
+        <PanelHeader>
+            Игра
         </PanelHeader>
         <Group>
             <List>
@@ -25,9 +23,9 @@ const Locations = ({ id, go }) => (
     </Panel>
 );
 
-Locations.propTypes = {
+Game.propTypes = {
     id: PropTypes.string.isRequired,
     go: PropTypes.func.isRequired,
 };
 
-export default Locations;
+export default Game;

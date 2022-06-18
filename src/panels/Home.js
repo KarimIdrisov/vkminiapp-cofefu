@@ -12,6 +12,11 @@ const Home = ({ id, go }) => (
 					Посмотреть локации
 				</Button>
 			</Div>
+			<Div>
+				<Button stretched size="l" mode="secondary" onClick={go} data-to="game">
+					Начать игру
+				</Button>
+			</Div>
 		</Group>
 	</Panel>
 );
